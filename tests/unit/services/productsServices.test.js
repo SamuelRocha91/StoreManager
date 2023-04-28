@@ -28,3 +28,13 @@ describe('Verifica na camada services', function () {
         sinon.restore();
       });
 })
+
+describe('Verifica na camada services', function () {
+  it('se, uma vez feita uma requisição POST para a rota /products, é possível se é retornado um objeto', async function () {
+    sinon.stub(productsModel, 'insertProduct').resolves(4);
+    sinon.stub(productsModel, 'findById').resolves({ id: 4, name: 'Samuel' });
+    const result = await productsService.createProduct('Samuel');
+    expect(result.type).to.equal(null);
+    expect(result.message).to.be.deep.equal({ id: 4, name: 'Samuel' });
+  });
+});

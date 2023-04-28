@@ -25,3 +25,13 @@ describe('Verifica na rota /products/:id na camada models', function () {
     sinon.restore();
   });
 });
+describe('Verifica na rota /products pelo método POST', function () {
+  it('se a função insertProduct consegue inserir um novo produto', async function () {
+    sinon.stub(connection, 'execute').resolves([{insertId: 4}]);
+    const result = await productsModel.insertProduct('Samuel');
+    expect(result).to.be.deep.equal(4);
+  });
+  afterEach(function () {
+    sinon.restore();
+  });
+});

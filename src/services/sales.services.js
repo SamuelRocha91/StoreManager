@@ -22,7 +22,6 @@ const createSale = async (array) => {
   }
   await salesModel.insertSale(array);
   const newIndex = await salesModel.selectMaxIndex();
-  console.log(newIndex.index);
   return {
     type: null, message: { id: newIndex.index, itemsSold: array },
 };
@@ -30,4 +29,5 @@ const createSale = async (array) => {
 
 module.exports = {
   createSale,
+  findProducts,
 };

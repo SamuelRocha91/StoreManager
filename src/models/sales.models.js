@@ -50,7 +50,6 @@ const findById2 = async (id) => {
   return result;
 };
 
-
 module.exports = {
   findById,
   insertSale,

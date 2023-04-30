@@ -78,6 +78,89 @@ describe('Verifica se na rota "/sales" na camada controllers', function () {
   itemsSold: [ { productId: 1, quantity: 1 }, { productId: 2, quantity: 5 } ]
 });
    });
+  it('se é retornado um status 200 e um objeto no app.get da /sales', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {};
+
+
+    sinon.stub(salesServices, 'findAll').resolves({ type: null, message: [
+  {
+    "saleId": 1,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 1,
+    "quantity": 5
+  },
+  {
+    "saleId": 1,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 2,
+    "quantity": 10
+  },
+  {
+    "saleId": 2,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 3,
+    "quantity": 15
+  }
+]});
+    
+    await salesControllers.findAll(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(
+  [
+  {
+    "saleId": 1,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 1,
+    "quantity": 5
+  },
+  {
+    "saleId": 1,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 2,
+    "quantity": 10
+  },
+  {
+    "saleId": 2,
+    "date": "2023-04-30T21:51:44.000Z",
+    "productId": 3,
+    "quantity": 15
+  }
+      ] 
+  );
+  });
+  it('se é retornado um status 404 e uma mensagem de erro caso a venda não seja encontrada', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {
+      params: {id: 1}
+    };
+
+
+    sinon.stub(salesServices, 'findById').resolves({ type: 'SALE_NOT_FOUND', message: null });
+    
+    await salesControllers.findById(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
+   it('se é retornado um status 404 e uma mensagem de erro caso a venda não seja encontrada', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {
+      params: {id: 1}
+    };
+
+
+    sinon.stub(salesServices, 'findById').resolves({ type: null, message: salesMock.mockfindById2 });
+    
+    await salesControllers.findById(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(salesMock.mockfindById2);
+   });
     afterEach(function () {
     sinon.restore();
   });

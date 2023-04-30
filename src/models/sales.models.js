@@ -29,8 +29,32 @@ const insertSale = async (array) => {
   return true;
 };
 
+const findAll = async () => {
+  const [result] = await connection.execute(
+    `SELECT s.id AS saleId, s.date, ss.product_id AS productId, ss.quantity 
+    FROM StoreManager.sales AS s
+    INNER JOIN StoreManager.sales_products AS ss ON s.id = ss.sale_id ORDER BY saleId, productId;`,
+  );
+  return result;
+};
+
+const findById2 = async (id) => {
+  const [result] = await connection.execute(
+    `SELECT s.date, sp.product_id AS productId, sp.quantity
+     FROM StoreManager.sales AS s
+     INNER JOIN StoreManager.sales_products AS sp
+     ON s.id = sp.sale_id
+     WHERE sp.sale_id = ?;`,
+    [id],
+  );
+  return result;
+};
+
+
 module.exports = {
   findById,
   insertSale,
   selectMaxIndex,
+  findAll,
+  findById2,
 };

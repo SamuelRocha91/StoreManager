@@ -12,6 +12,19 @@ const findProducts = async (array) => {
   return total;
 };
 
+const findAll = async () => {
+  const result = await salesModel.findAll();
+  return { type: null, message: result };
+};
+
+const findById = async (id) => {
+  const result = await salesModel.findById2(id);
+  if (result.length === 0) {
+    return { type: 'SALE_NOT_FOUND', message: null };
+  }
+  return { type: null, message: result };
+};
+
 const createSale = async (array) => {
   if (!array.every((item) => Number(item.quantity) > 0)) {
     return { type: 'QUANTITY_INVALID', message: '"quantity" must be greater than or equal to 1' };
@@ -30,4 +43,6 @@ const createSale = async (array) => {
 module.exports = {
   createSale,
   findProducts,
+  findAll, 
+  findById,
 };

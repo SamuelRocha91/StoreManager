@@ -70,3 +70,35 @@ describe('Verifica na rota /products pelo método PUT', function () {
     sinon.restore();
   });
 });
+
+describe('Verifica na rota /products/:id pelo método DELETE', function () {
+  it('se a função deleteProduct consegue deletar um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([
+  {
+    fieldCount: 0,
+    affectedRows: 0,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  undefined
+]);
+    const result = await productsModel.deleteProduct(1);
+    expect(result).to.be.deep.equal([
+  {
+    fieldCount: 0,
+    affectedRows: 0,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  undefined
+]);
+  });
+  
+  afterEach(function () {
+    sinon.restore();
+  });
+});

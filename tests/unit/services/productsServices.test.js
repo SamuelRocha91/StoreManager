@@ -53,6 +53,20 @@ describe('Verifica na camada services', function () {
     sinon.stub(productsModel, 'findById').resolves(undefined);
     const result = await productsService.updateProduct(1, 'thor');
     expect(result).to.deep.equal({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+    });
+  it('se, uma vez feita uma requisição DELETE para a rota /products com um produto inexistente, se é retornado um objeto de erro', async function () {
+    sinon.stub(productsModel, 'findById').resolves();
+
+    const result = await productsService.deleteProduct(7);
+
+    expect(result).to.be.deep.equal({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+  });
+   it('se, uma vez feita uma requisição DELETE para a rota /products com um produto existente, se é retornado um objeto', async function () {
+    sinon.stub(productsModel, 'findById').resolves({ id: 4, name: 'Samuel' });
+
+    const result = await productsService.deleteProduct(4);
+
+    expect(result).to.be.deep.equal({ type: null, message: 'ok' });
   });
      afterEach(function () {
         sinon.restore();

@@ -67,6 +67,40 @@ describe('Verifica se na rota "/sales" e camada models', function () {
      const result = await salesModel.findById2(1);
 
     expect(result).to.be.deep.equal(salesMock.mockfindById2);
+   });
+   it('se a função findByIDSale consegue encontrar uma venda pelo id', async function () {
+    sinon.stub(connection, 'execute').resolves([[{ id: 2, date: '2023-05-01T14:59:15.000Z' }]]);
+    
+     const result = await salesModel.findByIdSale(2);
+
+    expect(result).to.be.deep.equal({ id: 2, date: '2023-05-01T14:59:15.000Z' });
+   });
+  
+    it('se a função deleteSale consegue deletar uma venda pelo id', async function () {
+    sinon.stub(connection, 'execute').resolves([
+  {
+    fieldCount: 0,
+    affectedRows: 0,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  undefined
+]);
+    
+     const result = await salesModel.deleteSale(1);
+    expect(result).to.be.deep.equal([
+  {
+    fieldCount: 0,
+    affectedRows: 0,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  undefined
+]);
   });
     afterEach(function () {
     sinon.restore();

@@ -229,7 +229,7 @@ describe('Verifica se na rota "/sales" na camada controllers', function () {
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
   });
-   it('se é retornado um status 404 e uma mensagem de erro caso a venda não seja encontrada', async function () {
+   it('se é retornado um status 200 e um objeto com a venda encontrada', async function () {
     const res = {};
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
@@ -244,7 +244,36 @@ describe('Verifica se na rota "/sales" na camada controllers', function () {
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(salesMock.mockfindById2);
    });
+    it('se é retornado um status 404 e uma mensagem de erro caso a venda a ser deletada não seja encontrada', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {
+      params: {id: 99}
+    };
+
+
+    sinon.stub(salesServices, 'deleteSale').resolves({ type: 'SALE_NOT_FOUND', message: 'Sale not found' });
+    
+    await salesControllers.deleteSale(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+   });
     afterEach(function () {
     sinon.restore();
-  });
+    });
+     it('se é retornado um status 204 com a deleção da venda', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.send = sinon.stub().returns();
+    const req = {
+      params: {id: 1}
+    };
+
+
+    sinon.stub(salesServices, 'deleteSale').resolves({ type: null, message: 'ok' });
+    
+    await salesControllers.deleteSale(req, res);
+    expect(res.status).to.have.been.calledWith(204);
+   });
 })

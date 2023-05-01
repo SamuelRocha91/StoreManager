@@ -54,6 +54,20 @@ describe('Verifica na camada services da rota "sales"', function () {
     const result = await salesServices.findById(1);
 
     expect(result).to.be.deep.equal({ type: null, message: salesMock.mockfindById2 });
+    });
+    it('Verifica se a função deleteSale ao não encontrar uma venda com aquele id retorna um objeto de erro', async function () {
+    sinon.stub(salesModel, 'findByIdSale').resolves();
+    
+    const result = await salesServices.deleteSale(1);
+
+    expect(result).to.be.deep.equal({ type: 'SALE_NOT_FOUND', message: 'Sale not found' });
+    });
+    it('Verifica se a função deleteSale ao encontrar uma venda com aquele id retorna um objeto', async function () {
+    sinon.stub(salesModel, 'findByIdSale').resolves({ id: 2, date: '2023-05-01T14:59:15.000Z' });
+    
+    const result = await salesServices.deleteSale(1);
+
+    expect(result).to.be.deep.equal({ type: null, message: 'ok' });
   });
     afterEach(function () {
     sinon.restore();

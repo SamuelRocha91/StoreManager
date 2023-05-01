@@ -31,6 +31,41 @@ describe('Verifica na rota /products pelo método POST', function () {
     const result = await productsModel.insertProduct('Samuel');
     expect(result).to.be.deep.equal(4);
   });
+  
+  afterEach(function () {
+    sinon.restore();
+  });
+});
+
+describe('Verifica na rota /products pelo método PUT', function () {
+  it('se a função updateProduct consegue inserir um novo produto', async function () {
+    sinon.stub(connection, 'execute').resolves([
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 1,
+    quantity: 5
+  },
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 2,
+    quantity: 10
+  }
+]);
+    const result = await productsModel.updateProduct(1, 'Thor');
+    expect(result).to.be.deep.equal([
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 1,
+    quantity: 5
+  },
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 2,
+    quantity: 10
+  }
+]);
+  });
+  
   afterEach(function () {
     sinon.restore();
   });

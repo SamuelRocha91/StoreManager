@@ -47,30 +47,6 @@ describe('Verifica na camada controllers', function () {
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
-  it('verifica se ao fazer uma requisição para inserção de um produto sem o nome se é retornado um erro', async function () {
-    const res = {};
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    const req = {
-      body: {}
-    };
-
-    await productsControllers.create(req, res);
-    expect(res.status).to.have.been.calledWith(400);
-    expect(res.json).to.have.been.calledWith({ message: '"name" is required' });
-  });
-    it('verifica se ao fazer uma requisição para inserção de um produto e o nome tiver comprimento menor que 5 caracteres é retornado um erro', async function () {
-    const res = {};
-    res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns();
-    const req = {
-      body: {name: 'xab'}
-     };
-
-    await productsControllers.create(req, res);
-    expect(res.status).to.have.been.calledWith(422);
-    expect(res.json).to.have.been.calledWith({ message: '"name" length must be at least 5 characters long' });
-    })
     it('verifica se ao fazer uma requisição com o nome correto se é retornado um objeto de confirmação', async function () {
     const res = {};
     res.status = sinon.stub().returns(res);
@@ -83,6 +59,34 @@ describe('Verifica na camada controllers', function () {
     await productsControllers.create(req, res);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith({id: 4, name: 'xablau' } );
+    })
+   it('verifica se ao fazer uma atualização com um produto incorreto se é retornado um objeto de erro', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {
+      params: { id: 999 },
+      body: {name: 'thor'}
+    };
+    sinon.stub(productsService, 'updateProduct').resolves({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+
+    await productsControllers.update(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found'} );
+   })
+     it('verifica se ao fazer uma atualização com um produto correto se é retornado um objeto', async function () {
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const req = {
+      params: { id: 1 },
+      body: {name: 'thor'}
+    };
+    sinon.stub(productsService, 'updateProduct').resolves( { type: null, message: { id: 1, name: 'thor' } });
+
+    await productsControllers.update(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({ id: 1, name: 'thor' } );
   })
   afterEach(function () {
     sinon.restore();

@@ -37,4 +37,53 @@ describe('Verifica na camada services', function () {
     expect(result.type).to.equal(null);
     expect(result.message).to.be.deep.equal({ id: 4, name: 'Samuel' });
   });
+     afterEach(function () {
+        sinon.restore();
+      });
+});
+
+
+describe('Verifica na camada services', function () {
+  it('se, uma vez feita uma requisição PUT para a rota /products/:id se é retornado um objeto de erro caso não exista produto com esse parâmetro', async function () {
+    sinon.stub(productsModel, 'findById').resolves(undefined);
+    const result = await productsService.updateProduct(1, 'thor');
+    expect(result).to.deep.equal({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+  });
+    it('se, uma vez feita uma requisição PUT para a rota /products/:id se é retornado um objeto correto caso o produto seja existente', async function () {
+    sinon.stub(productsModel, 'findById').resolves(undefined);
+    const result = await productsService.updateProduct(1, 'thor');
+    expect(result).to.deep.equal({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+  });
+     afterEach(function () {
+        sinon.restore();
+      });
+});
+
+describe('Verifica na camada services', function () {
+  it('se, uma vez feita uma requisição PUT para a rota /products/:id se é retornado um objeto de erro caso não exista produto com esse parâmetro', async function () {
+    sinon.stub(productsModel, 'findById').resolves(undefined);
+    const result = await productsService.updateProduct(1, 'thor');
+    expect(result).to.deep.equal({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+  });
+    it('se, uma vez feita uma requisição PUT para a rota /products/:id se é retornado um objeto correto caso o produto seja existente', async function () {
+    sinon.stub(productsModel, 'findById').resolves([
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 1,
+    quantity: 5
+  },
+  {
+    date: '2023-05-01T11:51:21.000Z',
+    productId: 2,
+    quantity: 10
+  }
+    ]);
+      sinon.stub(productsModel, 'updateProduct').resolves({ type: null, message: { id: 1, name: 'Chapolin colorado' } });
+
+    const result = await productsService.updateProduct(1, 'Chapolin colorado');
+    expect(result).to.deep.equal({ type: null, message: { id: 1, name: 'Chapolin colorado' } });
+  });
+     afterEach(function () {
+        sinon.restore();
+      });
 });

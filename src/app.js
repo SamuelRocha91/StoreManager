@@ -3,6 +3,7 @@ const productsControllers = require('./controllers/products.controllers');
 const salesControllers = require('./controllers/sales.controllers');
 
 const validateNewSale = require('./middlewares/validateNewSale');
+const validateNameProduct = require('./middlewares/validateNameProduct');
 
 const app = express();
 
@@ -17,7 +18,9 @@ app.get('/products', productsControllers.listProducts);
 
 app.get('/products/:id', productsControllers.getProducts);
 
-app.post('/products', productsControllers.create);
+app.post('/products', validateNameProduct, productsControllers.create);
+
+app.put('/products/:id', validateNameProduct, productsControllers.update);
 
 app.post('/sales', validateNewSale, salesControllers.create);
 

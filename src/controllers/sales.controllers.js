@@ -25,10 +25,18 @@ const findById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await salesServices.deleteSale(id);
+  if (type) return res.status(404).json({ message });
+  return res.status(204).send();
+};
+
 module.exports = {
   create,
   findAll, 
   findById,
+  deleteSale,
 };
 
 // Se a requisição tiver algum item cujo campo productId não existe no banco de dados, o resultado retornado deverá ser conforme exibido abaixo, com um status http 404

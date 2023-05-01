@@ -8,6 +8,14 @@ const findById = async (productId) => {
   return result;
 };
 
+const findByIdSale = async (saleId) => {
+  const [[result]] = await connection.execute(
+    'SELECT * FROM StoreManager.sales WHERE id = ?',
+    [saleId],
+  );
+  return result;
+};
+
 const selectMaxIndex = async () => {
   const [[result]] = await connection.execute(
     'SELECT Max(id) AS "index" FROM StoreManager.sales;',
@@ -50,10 +58,20 @@ const findById2 = async (id) => {
   return result;
 };
 
+const deleteSale = async (id) => {
+  const result = await connection.execute(
+    'DELETE FROM StoreManager.sales WHERE id = ?;',
+    [id],
+  );   
+  return result;
+};
+
 module.exports = {
   findById,
   insertSale,
   selectMaxIndex,
   findAll,
   findById2,
+  deleteSale,
+  findByIdSale,
 };

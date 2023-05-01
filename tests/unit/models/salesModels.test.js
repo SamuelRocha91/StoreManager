@@ -54,6 +54,21 @@ describe('Verifica se na rota "/sales" e camada models', function () {
 
     expect(result).to.be.deep.equal(salesMock.mockfindById2);
   });
+    });
+   it('se a função findAll retorna um objeto com todas as vendas', async function () {
+    sinon.stub(connection, 'execute').resolves([salesMock.mockFindAll]);
+    
+     const result = await salesModel.findAll();
+
+    expect(result).to.be.deep.equal(salesMock.mockFindAll);
+   });
+   it('se a função findByID2 retorna um objeto com todas as vendas', async function () {
+    sinon.stub(connection, 'execute').resolves([salesMock.mockfindById2]);
+    
+     const result = await salesModel.findById2(1);
+
+    expect(result).to.be.deep.equal(salesMock.mockfindById2);
+  });
     afterEach(function () {
     sinon.restore();
   });

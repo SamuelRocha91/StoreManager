@@ -47,8 +47,11 @@ const findById2 = async (id) => {
      WHERE sp.sale_id = ?;`,
     [id],
   );
+  console.log(result);
   return result;
 };
+
+findById2(1);
 
 module.exports = {
   findById,

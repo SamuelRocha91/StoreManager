@@ -34,6 +34,27 @@ describe('Verifica na camada services da rota "sales"', function () {
       type: null, message: { id: 2, itemsSold: salesMock.insertSale },
     });
   });
+  it('Verifica se a função findAll retorna um objeto', async function () {
+    sinon.stub(salesModel, 'findAll').resolves(salesMock.mockFindAll);
+    
+    const result = await salesServices.findAll();
+
+    expect(result).to.be.deep.equal({ type: null, message: salesMock.mockFindAll });
+  });
+   it('Verifica se a função findById sem encontrar resultado retorna um objeto de erro', async function () {
+    sinon.stub(salesModel, 'findById').resolves([]);
+    
+    const result = await salesServices.findById(999);
+
+    expect(result).to.be.deep.equal({ type: 'SALE_NOT_FOUND', message: null });
+   });
+    it('Verifica se a função findById ao um encontrar resultado retorna um objeto com o resultado', async function () {
+    sinon.stub(salesModel, 'findById2').resolves(salesMock.mockfindById2);
+    
+    const result = await salesServices.findById(1);
+
+    expect(result).to.be.deep.equal({ type: null, message: salesMock.mockfindById2 });
+  });
     afterEach(function () {
     sinon.restore();
   });

@@ -54,7 +54,6 @@ describe('Verifica se na rota "/sales" e camada models', function () {
 
     expect(result).to.be.deep.equal(salesMock.mockfindById2);
   });
-    });
    it('se a função findAll retorna um objeto com todas as vendas', async function () {
     sinon.stub(connection, 'execute').resolves([salesMock.mockFindAll]);
     

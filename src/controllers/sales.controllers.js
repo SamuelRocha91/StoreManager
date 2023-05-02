@@ -32,11 +32,29 @@ const deleteSale = async (req, res) => {
   return res.status(204).send();
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const array = req.body;
+  const { type, message } = await salesServices.insertDelete(id, array);
+  if (type === 'QUANTITY_INVALID') {
+    return res.status(422).json({ message });
+  }
+  if (type === 'INVALID_VALUE') {
+    return res.status(404).json({ message });
+  }
+  if (type) return res.status(404).json({ message: 'Sale not found' });
+  return res.status(200).json({
+    saleId: id,
+    itemsUpdated: array,
+  });
+};
+
 module.exports = {
   create,
   findAll, 
   findById,
   deleteSale,
+  update,
 };
 
 // Se a requisição tiver algum item cujo campo productId não existe no banco de dados, o resultado retornado deverá ser conforme exibido abaixo, com um status http 404

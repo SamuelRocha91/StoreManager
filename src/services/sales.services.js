@@ -47,10 +47,25 @@ const deleteSale = async (id) => {
   return { type: null, message: 'ok' };
 };
 
+const insertDelete = async (saleID, data) => {
+  const result = await salesModel.findByIdSale(saleID);
+if (!result) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+if (!data.every((item) => Number(item.quantity) > 0)) {
+    return { type: 'QUANTITY_INVALID', message: '"quantity" must be greater than or equal to 1' };
+  }
+  const total = await findProducts(data);
+  if (total !== data.length) {
+    return { type: 'INVALID_VALUE', message: 'Product not found' };
+  }
+  await salesModel.updateSale(saleID, data);
+  return { type: null, message: 'ok' };
+};
+
 module.exports = {
   createSale,
   findProducts,
   findAll, 
   findById,
   deleteSale,
+  insertDelete,
 };

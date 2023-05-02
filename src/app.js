@@ -14,6 +14,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
+app.get('/products/search', productsControllers.searchProduct);
+
 app.get('/products', productsControllers.listProducts);
 
 app.get('/products/:id', productsControllers.getProducts);

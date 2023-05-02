@@ -4,37 +4,19 @@
     "colId": "history",
     "containerId": "",
     "name": "https://localhost:3001/sales/1",
-    "url": "https://localhost:3001/sales/1",
-    "method": "PUT",
+    "url": "http://localhost:3001/products/search?q=Martelo",
+    "method": "GET",
     "sortNum": 0,
     "created": "2023-05-02T16:39:44.590Z",
-    "modified": "2023-05-02T16:39:44.590Z",
+    "modified": "2023-05-02T22:18:36.695Z",
     "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "[{\n  \"quantity\":1\n}]",
-      "form": []
-    },
-    "tests": []
-  },
-  {
-    "_id": "644a4594-44b1-4dc0-94ca-699aca78eccb",
-    "colId": "history",
-    "containerId": "",
-    "name": "https://localhost:3006/sales/1",
-    "url": "https://localhost:3006/sales/1",
-    "method": "PUT",
-    "sortNum": 0,
-    "created": "2023-05-02T16:40:13.595Z",
-    "modified": "2023-05-02T16:40:13.595Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "[{\n  \"quantity\":1\n}]",
-      "form": []
-    },
+    "params": [
+      {
+        "name": "q",
+        "value": "Martelo",
+        "isPath": false
+      }
+    ],
     "tests": []
   },
   {
@@ -47,44 +29,6 @@
     "sortNum": 0,
     "created": "2023-05-02T16:41:03.891Z",
     "modified": "2023-05-02T16:41:03.891Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "[{\n  \"quantity\":1\n}]",
-      "form": []
-    },
-    "tests": []
-  },
-  {
-    "_id": "ee979d7e-6f7c-4986-afbb-9ab826110110",
-    "colId": "history",
-    "containerId": "",
-    "name": "http://localhost:3001/sales/2",
-    "url": "http://localhost:3001/sales/2",
-    "method": "PUT",
-    "sortNum": 0,
-    "created": "2023-05-02T16:41:22.290Z",
-    "modified": "2023-05-02T16:41:22.290Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "[{\n  \"quantity\":1\n}]",
-      "form": []
-    },
-    "tests": []
-  },
-  {
-    "_id": "c38a5ec5-48a6-4cad-9ee7-7c13b58a57e8",
-    "colId": "history",
-    "containerId": "",
-    "name": "http://localhost:3001/sales/1",
-    "url": "http://localhost:3001/sales/1",
-    "method": "PUT",
-    "sortNum": 0,
-    "created": "2023-05-02T16:42:28.596Z",
-    "modified": "2023-05-02T16:42:28.596Z",
     "headers": [],
     "params": [],
     "body": {

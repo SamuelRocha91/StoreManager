@@ -5,6 +5,13 @@ const allProducts = async () => {
   return { type: null, message: result };
 };
 
+const findByName = async (name) => {
+  const result = await productsModel.searchByName(name);
+  if (!result) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  console.log(result);
+  return { type: null, message: result };
+};
+
 const productsById = async (productId) => {
   const result = await productsModel.findById(productId);
   // pode-se fazer isso na validation antes e tipo se if.type return error
@@ -38,4 +45,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  findByName,
 };
